@@ -5,13 +5,13 @@
  const router = express.Router()
  
 router.post('/signup', async (req, res) => {
-   const { username, password } = req.body
+  const { username, password } = req.body
 
-   // username should be unique
-   const user = await User.findOne({ username })
-   if (user !== null) {
-     res.send('username already exists')
-   } else {
+  // username should be unique
+  const user = await User.findOne({ username })
+  if (user !== null) {
+    res.send('username already exists')
+  } else {
     try {
       await User.create({ username, password })
       res.send('user creation was successful')
@@ -19,10 +19,10 @@ router.post('/signup', async (req, res) => {
       console.log(e)
       res.send('user creation had a problem')
     }
-  }
+  } 
 })
  
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { username, password } = req.body
 
   // verify matching username and password exists
@@ -35,7 +35,7 @@ router.post('/login', (req, res) => {
   }
 })
 
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
   const { username, password } = req.body
 
   const user = await User.findOne({ username })
