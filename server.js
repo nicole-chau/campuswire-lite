@@ -41,15 +41,13 @@ app.get('/favicon.ico', (req, res) => {
   res.status(404).send()
 })
 
-// app.use(isAuthenticated)
-
 // default error handler
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err)
   }
   res.status(500)
-  res.json({error: err})
+  res.json({error: err.message})
   return res
 })
 

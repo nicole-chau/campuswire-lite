@@ -39,13 +39,8 @@ router.post('/login', async (req, res, next) => {
 router.post('/logout', isAuthenticated, (req, res) => {
   const { username, password } = req.body
 
-  // const user = await User.findOne({ username })
-    req.session.username = null
-    req.session.password = null
-    res.send('logout successful')
-  // } else {
-  //   res.send('logout failed')
-  // }
+  req.session = null
+  res.send('logout successful')
 })
 
 router.post('/verify', (req, res, next) => {
