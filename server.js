@@ -5,13 +5,12 @@ const cookieSession = require('cookie-session')
 
 const AccountRouter = require('./routes/account')
 const ApiRouter = require('./routes/api')
-const { isAuthenticated } = require('./middlewares/isAuthenticated')
 
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://nicolechau:cis197nicole@cluster0.eslsa.mongodb.net/test'
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
 
 const app = express()
@@ -22,8 +21,7 @@ app.use(cookieSession({
   name: 'session',
   keys: ['hi'],
   // Cookie Options
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  // maxAge: 5 * 1000
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
 }))
 
 app.use(express.static('dist')) // set the static folder
@@ -47,7 +45,7 @@ app.use((err, req, res, next) => {
     return next(err)
   }
   res.status(500)
-  res.json({error: err.message})
+  res.json({ error: err.message })
   return res
 })
 

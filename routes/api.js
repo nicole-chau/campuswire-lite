@@ -1,8 +1,8 @@
 const express = require('express')
 
-const Question = require('../models/Question')
+const Question = require('../models/question')
 const { isAuthenticated } = require('../middlewares/isAuthenticated')
- 
+
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
@@ -10,36 +10,32 @@ router.get('/', async (req, res, next) => {
     const questions = await Question.find()
     res.json(questions)
   } catch (e) {
-    console.log(e)
-    res.send('error occured')
+    next(new Error('error fetching questions'))
   }
 })
 
-router.post('/add', isAuthenticated, async(req, res, next) => {
-  const { questionText } = req.body
+router.post('/add', isAuthenticated, async (req, res, next) => {
+  const { body: { questionText } } = req
 
   // get author key
-  const author = req.session.username
+  const { session: { username } } = req
 
   try {
-    await Question.create({ questionText, author })
-    res.send(`question created by ${author} successfully`)
+    await Question.create({ questionText, author: username })
+    res.send(`question created by ${username} successfully`)
   } catch (e) {
-    console.log('hi')
     next(new Error('question creation failed'))
-    // res.send('question creation failed')
   }
 })
 
-router.post('/answer', isAuthenticated, async(req, res, next) => {
-  const { _id, answer } = req.body
+router.post('/answer', isAuthenticated, async (req, res, next) => {
+  const { body: { _id, answer } } = req
 
   try {
-    const question = await Question.updateOne({ _id }, { answer })
+    await Question.updateOne({ _id }, { answer })
     res.send('question update was successful')
   } catch (e) {
-    console.log(e)
-    res.send('error occured')
+    next(new Error('answer update failed'))
   }
 })
 
