@@ -1,10 +1,11 @@
  const express = require('express')
 
  const User = require('../models/User')
+ const { isAuthenticated } = require('../middlewares/isAuthenticated')
  
  const router = express.Router()
  
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body
 
   // username should be unique
@@ -22,7 +23,7 @@ router.post('/signup', async (req, res) => {
   } 
 })
  
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   const { username, password } = req.body
 
   // verify matching username and password exists
@@ -35,19 +36,19 @@ router.post('/login', async (req, res) => {
   }
 })
 
-router.post('/logout', async (req, res) => {
+router.post('/logout', isAuthenticated, (req, res) => {
   const { username, password } = req.body
 
-  const user = await User.findOne({ username })
-  if (user !== null) {
-    req.session = null
+  // const user = await User.findOne({ username })
+    req.session.username = null
+    req.session.password = null
     res.send('logout successful')
-  } else {
-    res.send('logout failed')
-  }
+  // } else {
+  //   res.send('logout failed')
+  // }
 })
 
-router.post('/verify', (req, res) => {
+router.post('/verify', (req, res, next) => {
   if (req.session.username) {
     res.send(`you are logged in as ${req.session.username}`)
   } else {
@@ -55,4 +56,4 @@ router.post('/verify', (req, res) => {
   }
 })
  
- module.exports = router
+module.exports = router

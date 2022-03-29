@@ -4,6 +4,8 @@ const path = require('path')
 const cookieSession = require('cookie-session')
 
 const AccountRouter = require('./routes/account')
+const ApiRouter = require('./routes/api')
+const { isAuthenticated } = require('./middlewares/isAuthenticated')
 
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://nicolechau:cis197nicole@cluster0.eslsa.mongodb.net/test'
 
@@ -32,15 +34,29 @@ app.get('/', (req, res) => {
 
 app.use('/account', AccountRouter)
 
+app.use('/api/questions', ApiRouter)
+
 // set favicon
 app.get('/favicon.ico', (req, res) => {
   res.status(404).send()
 })
 
-// // set the initial entry point
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../dist/index.html'))
-// })
+// app.use(isAuthenticated)
+
+// default error handler
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(500)
+  res.json({error: err})
+  return res
+})
+
+// set the initial entry point
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
 
 app.listen(3000, () => {
   console.log('listening on 3000')
