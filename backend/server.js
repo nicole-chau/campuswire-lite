@@ -34,11 +34,6 @@ app.use('/account', AccountRouter)
 
 app.use('/api/questions', ApiRouter)
 
-// set favicon
-app.get('/favicon.ico', (req, res) => {
-  res.status(404).send()
-})
-
 // default error handler
 app.use((err, req, res, next) => {
   if (res.headersSent) {
@@ -47,6 +42,11 @@ app.use((err, req, res, next) => {
   res.status(500)
   res.json({ error: err.message })
   return res
+})
+
+// set favicon
+app.get('/favicon.ico', (req, res) => {
+  res.status(404).send()
 })
 
 // set the initial entry point
