@@ -9,12 +9,13 @@ import {
 
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
+import HomePage from './components/HomePage'
 
 const App = () => (
   <Router>
     <div>
       <Routes>
-        <Route path="/" element={<h1>Hello world!</h1>} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
       </Routes>
