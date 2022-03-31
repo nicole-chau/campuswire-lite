@@ -11,7 +11,7 @@ router.post('/signup', async (req, res, next) => {
   // username should be unique
   const user = await User.findOne({ username })
   if (user !== null) {
-    res.send('username already exists')
+    next(new Error('username already exists'))
   } else {
     try {
       await User.create({ username, password })
