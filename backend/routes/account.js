@@ -37,12 +37,13 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/logout', isAuthenticated, (req, res) => {
   req.session = null
+  console.log('logged out')
   res.send('logout successful')
 })
 
 router.post('/verify', (req, res, next) => {
   if (req.session.username) {
-    res.send(`you are logged in as ${req.session.username}`)
+    res.send(req.session.username)
   } else {
     next(new Error('not logged in'))
   }
