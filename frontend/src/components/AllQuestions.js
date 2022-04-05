@@ -11,20 +11,24 @@ const AllQuestions = () => {
   const [displayAnswer, setDisplayAnswer] = useState('')
 
   useEffect(() => {
-    const getQuestions = async () => {
-      try {
-        const response = await axios.get('/api/questions')
-        setQuestions(response.data)
-        setDisplayId(response.data[0]._id)
-        setDisplayQuestion(response.data[0].questionText)
-        setDisplayAuthor(response.data[0].author)
-        setDisplayAnswer(response.data[0].answer)
-      } catch (e) {
-        console.log(e)
+    const intervalID = setInterval(() => {
+      const getQuestions = async () => {
+        try {
+          const response = await axios.get('/api/questions')
+          setQuestions(response.data)
+          setDisplayId(response.data[0]._id)
+          setDisplayQuestion(response.data[0].questionText)
+          setDisplayAuthor(response.data[0].author)
+          setDisplayAnswer(response.data[0].answer)
+        } catch (e) {
+          console.log(e)
+        }
       }
-    }
 
-    getQuestions()
+      getQuestions()
+    }, 2000)
+
+    return () => clearInterval(intervalID)
   }, [])
 
   const selectQuestion = ({ _id, questionText, author, answer }) => {
@@ -33,8 +37,6 @@ const AllQuestions = () => {
     setDisplayAuthor(author)
     setDisplayAnswer(answer)
   }
-
-  // console.log(qid)
 
   let id = 0
 

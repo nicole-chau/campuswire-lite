@@ -4,14 +4,14 @@ import axios from 'axios'
 const Question = ({ id, questionText, author, answer }) => {
   const [newAnswer, setNewAnswer] = useState('')
 
-  const answerQuestion = async () => {
+  const answerQuestion = async e => {
+    e.preventDefault()
     try {
       await axios.post('/api/questions/answer', { _id: id, answer: newAnswer })
-    } catch (e) {
+    } catch (err) {
       alert('Question answer failed.')
     }
-
-    window.location.reload()
+    e.target.reset()
   }
 
   return (
@@ -27,8 +27,10 @@ const Question = ({ id, questionText, author, answer }) => {
       <br />
       <br />
       Answer this question:
-      <input onChange={e => setNewAnswer(e.target.value)} className="block w-80 p-2 my-2 border-2 rounded" />
-      <button type="button" onClick={() => answerQuestion()} className="bg-sky-400 text-white p-2 rounded w-30 my-3">Submit Answer</button>
+      <form onSubmit={answerQuestion}>
+        <input onChange={e => setNewAnswer(e.target.value)} className="block w-80 p-2 my-2 border-2 rounded" />
+        <button type="submit" className="bg-sky-400 text-white p-2 rounded w-30 my-3">Submit Answer</button>
+      </form>
     </>
   )
 }
