@@ -38,7 +38,7 @@ const LoggedIn = () => {
         <button type="button" onClick={() => logout()} className="bg-sky-400 text-white p-1 rounded">Log out</button>
       </div>
       <AddQuestion />
-      <AllQuestions />
+      <AllQuestions loggedIn />
     </>
   )
 }

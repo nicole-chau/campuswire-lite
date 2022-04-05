@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-const Question = ({ id, questionText, author, answer }) => {
+const Question = ({
+  loggedIn, id, questionText, author, answer,
+}) => {
   const [newAnswer, setNewAnswer] = useState('')
 
   const answerQuestion = async e => {
@@ -26,11 +28,16 @@ const Question = ({ id, questionText, author, answer }) => {
       {answer}
       <br />
       <br />
-      Answer this question:
-      <form onSubmit={answerQuestion}>
-        <input onChange={e => setNewAnswer(e.target.value)} className="block w-80 p-2 my-2 border-2 rounded" />
-        <button type="submit" className="bg-sky-400 text-white p-2 rounded w-30 my-3">Submit Answer</button>
-      </form>
+      {loggedIn
+      && (
+        <>
+          Answer this question:
+          <form onSubmit={answerQuestion}>
+            <input onChange={e => setNewAnswer(e.target.value)} className="block w-80 p-2 my-2 border-2 rounded" />
+            <button type="submit" className="bg-sky-400 text-white p-2 rounded w-30 my-3">Submit Answer</button>
+          </form>
+        </>
+      )}
     </>
   )
 }

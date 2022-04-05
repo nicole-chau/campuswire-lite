@@ -16,7 +16,7 @@ const AddQuestion = () => {
 
   return (
     <>
-      <button type="button" onClick={() => setShowModal(true)} className="bg-sky-400 text-white p-1 rounded w-1/4">Add new question</button>
+      <button type="button" onClick={() => setShowModal(true)} className="bg-sky-400 text-white p-2 block rounded w-1/4">Add new question</button>
       {showModal
       && (
         <div className="flex justify-center items-center bg-gray-200 bg-opacity-50 absolute inset-0">
