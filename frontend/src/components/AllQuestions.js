@@ -31,7 +31,7 @@ const AllQuestions = ({ loggedIn }) => {
             setDisplayAnswer(filter[0].answer)
           }
         } catch (e) {
-          console.log(e)
+          alert('failed to get questions')
         }
       }
 

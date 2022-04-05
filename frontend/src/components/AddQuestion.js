@@ -10,7 +10,7 @@ const AddQuestion = () => {
       await axios.post('api/questions/add', { questionText: question })
       setShowModal(false)
     } catch (e) {
-      console.log(e.response.data)
+      alert('failed to submit question')
     }
   }
 
