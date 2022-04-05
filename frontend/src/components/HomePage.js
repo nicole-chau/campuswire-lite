@@ -19,8 +19,6 @@ const HomePage = () => {
     isLoggedIn()
   }, [])
 
-  console.log(loggedIn)
-
   return (
     <div className="m-5">
       <h1 className="font-sans text-3xl font-bold mb-8">Campuswire Lite</h1>

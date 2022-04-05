@@ -15,7 +15,7 @@ const AddQuestion = () => {
 
   return (
     <>
-      <button type="button" onClick={() => setShowModal(true)} className="bg-sky-400 text-white p-1 rounded">Add new question</button>
+      <button type="button" onClick={() => setShowModal(true)} className="bg-sky-400 text-white p-1 rounded w-1/4">Add new question</button>
       {showModal && (<>
         <input onChange={e => setQuestion(e.target.value)} />
         <button type="button" onClick={() => submitQuestion()}>Submit Question</button>
